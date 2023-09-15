@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.apache.log4j.Logger;
+import org.example.data.FlywayConfig;
 import org.example.data.OsbbCrud;
 import org.example.data.Resident;
 
@@ -16,6 +17,7 @@ public class App {
     public static void main(String[] args) {
 
         logger.info("Start of the program");
+        FlywayConfig.fwMigration();
 
         try (OsbbCrud crud = new OsbbCrud()
                 .init()) {

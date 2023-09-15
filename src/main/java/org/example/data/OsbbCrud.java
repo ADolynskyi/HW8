@@ -1,7 +1,6 @@
 package org.example.data;
 
 import org.apache.log4j.Logger;
-import org.flywaydb.core.Flyway;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.example.Config.*;
-
 public class OsbbCrud implements Closeable {
     private static final Logger logger = Logger.getLogger(OsbbCrud.class);
     private static final String SQL_RESIDENTS_WITH_CAR_NOT_ALLOWED =
@@ -27,20 +25,9 @@ public class OsbbCrud implements Closeable {
                     "\t\tHAVING COUNT( ra.resident_id)<2)";
     private Connection conn = null;
 
-    private void fwMigration() {
-        logger.debug("Migrated successfully");
-
-        Flyway.configure()
-                .dataSource(jdbcUrl, username, password)
-                .locations("classpath:flyway.scripts")
-                .load()
-                .migrate();
-
-    }
 
     public OsbbCrud init() throws SQLException {
         logger.info("Crud initialized");
-        fwMigration();
         conn = DriverManager.getConnection(jdbcUrl, username, password);
         return this;
     }
